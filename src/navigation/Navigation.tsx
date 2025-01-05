@@ -18,9 +18,21 @@ const Navigation = () => {
           headerShown: false, // Hide header by default
         }}
       >
-        <Stack.Screen name="SplashScreen" component={SplashScreen}/>
-    
-
+        <Stack.Screen name="SplashScreen" component={SplashScreen} />
+        <Stack.Screen
+          name="DeliveryLogin"
+          component={DeliveryLogin}
+          options={{
+            animation: 'fade',
+          }}
+        />
+        <Stack.Screen
+          name="CustomerLogin"
+          component={CustomerLogin}
+          options={{
+            animation: 'fade',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

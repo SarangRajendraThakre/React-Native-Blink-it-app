@@ -12,8 +12,28 @@ import Geolocation from 'react-native-geolocation-service';
 import { Colors } from '@utils/Constants';
 import { screenHeight, screenWidth } from '@utils/Scaling';
 import logo from '@assets/images/splash_logo.jpeg';
+import { useAuthStore } from '@state/authStore';
+import { tokenStorage } from '@state/storage';
+import { resetAndNavigate } from '@utils/NavigationUtils';
 
 const SplashScreen = () => {
+
+  const {user , setUser} = useAuthStore()
+  
+
+  const tokenCheck = async() =>{
+    const accessToken = tokenStorage.getString('accessToken') as string
+    const refreshToken = tokenStorage.getString('refreshToken') as string
+
+    if(accessToken)
+    {
+
+    }
+    resetAndNavigate('CustomerLogin')
+    return false
+
+  }
+
   useEffect(() => {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'android') {
@@ -28,6 +48,7 @@ const SplashScreen = () => {
               buttonPositive: 'OK',
             }
           );
+          tokenCheck()
 
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             console.log('Location permission granted');
