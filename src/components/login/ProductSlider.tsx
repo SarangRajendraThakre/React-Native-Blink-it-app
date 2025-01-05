@@ -14,12 +14,15 @@ const ProductSlider = () => {
     }, [imageData]);
 
     return (
-        <View>
-            <Autoscroll>
-                <View>
-                    {rows?.map((row: any, rowIndex: number) => (
+        <View pointerEvents='none'>
+            <Autoscroll style={styles.autoScroll} endPaddingWidth={0} duration={10000}  >
+                <View style={styles.gridContainer}>
+                    {rows?.map((row: any, rowIndex: number) => {
+                        return (
                         <MemoizedRow key={rowIndex} row={row} rowIndex={rowIndex} />
-                    ))}
+
+                        )
+ } )}
                 </View>
             </Autoscroll>
         </View>
@@ -28,12 +31,17 @@ const ProductSlider = () => {
 
 const Row: FC<{ row: typeof imageData; rowIndex: number }> = ({ row, rowIndex }) => {
     return (
-        <View>
-            {row.map((image, imageIndex) => (
-                <View key={imageIndex} style={[styles.itemContainer]}>
+        <View style={styles.row}>
+            {row.map((image, imageIndex) => {
+                const horizontalShift = rowIndex % 2 === 0  ? -18 : 18  ;
+                return (
+
+    
+                <View  key={imageIndex} style={[styles.itemContainer, { transform:[{translateX:horizontalShift}]}]}>
                     <Image source={image} style={styles.image} />
                 </View>
-            ))}
+            )}
+            )}
         </View>
     );
 };
@@ -56,6 +64,23 @@ const styles = StyleSheet.create({
         height: '100%',
         resizeMode: 'contain',
     },
+   autoScroll:{
+    position:'absolute',
+    zIndex: -2
+   },
+   gridContainer:{
+    justifyContent:'center',
+    overflow: 'visible',
+    alignItems:'center'
+   },
+
+   row:{
+       flexDirection:'row',
+       marginBottom:10
+
+   }
+
+   
 });
 
 export default ProductSlider;
